@@ -7,9 +7,10 @@ window.readVideogames = function() {
             const videogameUl = document.getElementById('videogames');
 
             videogameList.forEach(videogame => {
-                const li = document.createElement('li');
-                li.appendChild(document.createTextNode(videogame.title + ' (' + videogame.year + ') ' + videogame.type));
-                videogameUl.appendChild(li);
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.appendChild(document.createTextNode(videogame.name + ' ' + '|' + ' (' + videogame.year + ') ' + '|' + ' ' + videogame.type));
+                videogameUl.appendChild(listItem);
             })
         });
 }
