@@ -42,9 +42,10 @@ app.post('/videogames', async (req, res) => {
     res.status(201).json({}); // ---> Aquí damos el OK al registrar el nuevo juego. No devuelve nada
 });
 
- //modificar un videojuego existente
-app.put('/videogames/:videogame', async(req, res) => {
-   await db('videogames').where({ name: req.params.videogame }).update({
+ //modificar un videojuego existente por ID
+app.put('/videogames/:videogameId', async(req, res) => {
+   await db('videogames').where({ id: req.params.videogameId }).update({
+    name: req.body.name,
     type: req.body.type,
     year: req.body.year
 
