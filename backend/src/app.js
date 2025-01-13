@@ -55,12 +55,12 @@ app.put('/videogames/:videogameId', async(req, res) => {
 });
 
 //borrar videojuego que existe
-app.delete('/videogames/:videogame', async(req, res) => {
-    const videogameName = req.params.videogame;
-    await db('videogames').del().where({ name: videogameName });
+app.delete('/videogames/:videogameId', async(req, res) => {
+    await db('videogames').del().where({ id: req.params.videogameId });
 
     res.status(204).json({});
 });
+
 
 app.listen(8080, () => {
     console.log("El backend ha iniciado correctamente en el puerto 8080");
