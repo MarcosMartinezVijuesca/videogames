@@ -9,7 +9,7 @@ window.readVideogames = function() {
             videogameList.forEach(videogame => {
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item';
-                listItem.appendChild(document.createTextNode(videogame.name + ' ' + '|' + ' (' + videogame.year + ') ' + '|' + ' ' + videogame.type));
+                listItem.appendChild(document.createTextNode(videogame.name + ' ' + '|' + ' ' + videogame.type + ' ' + '|' + ' ' + videogame.year));
                 videogameUl.appendChild(listItem);
             })
         });
