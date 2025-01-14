@@ -10,6 +10,11 @@ window.addVideogame = function() {
         alert('El nombre es un campo necesario');
         return;
     }
+    
+    if(!year || isNaN){
+        alert('Por favor, introduzca una fecha válida.');
+        return;
+    }
 
 
    axios.post('http://localhost:8080/videogames',{
