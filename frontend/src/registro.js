@@ -1,18 +1,21 @@
 import axios from 'axios';
+import {notifyError, notifySuccess} from'./warningUtil.js';
+import { element } from './documentUtil.js';
+
 
 window.addVideogame = function() {
-   const name = document.getElementById('name').value;
-   const type = document.getElementById('type').value;
-   const year = document.getElementById('year').value;
+   const name = element('name').value;
+   const type = element('type').value;
+   const year = element('year').value;
 
    //TODO Añadir validación de datos
     if (name == '') {
-        alert('El nombre es un campo necesario');
+        notifyError('El nombre es un campo obligatorio.');
         return;
     }
     
-    if(!year || isNaN){
-        alert('Por favor, introduzca una fecha válida.');
+    if(!year || isNaN(year)){
+        notifyError('Introduzca una fecha válida.');
         return;
     }
 
@@ -22,4 +25,15 @@ window.addVideogame = function() {
         type: type,
         year: year
    });
+
+   //TODO confirmar al usuario que todo ha ido bien
+   notifySuccess('Videogame registrado correctamente.');
+        
+
+   //TODO vaciar el formulario
+   element('name').value = '';
+   element('type').value = '';
+   element('year').value = '';
+
+
 };
