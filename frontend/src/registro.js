@@ -8,7 +8,7 @@ window.addVideogame = function() {
    const type = element('type').value;
    const year = element('year').value;
 
-   //TODO Añadir validación de datos
+   //validación de datos
     if (name == '') {
         notifyError('El nombre es un campo obligatorio.');
         return;
@@ -26,14 +26,35 @@ window.addVideogame = function() {
         year: year
    });
 
-   //TODO confirmar al usuario que todo ha ido bien
+   //confirmar al usuario que todo ha ido bien
    notifySuccess('Videogame registrado correctamente.');
         
 
-   //TODO vaciar el formulario
+   //vaciar el formulario
    element('name').value = '';
    element('type').value = '';
    element('year').value = '';
 
 
+};
+
+window.addUser = function() {
+    const name = element('name').value;
+    const password = element('password').value;
+
+    if (name == '') {
+        notifyError('El nombre es un campo obligatorio.');
+        return;
+    }
+
+    axios.post('http://localhost:8080/users',{
+        name: name,
+        password: password
+   });
+
+
+   notifySuccess('Usuario registrado correctamente.');
+
+   element('name').value = '';
+   element('password').value = '';
 };

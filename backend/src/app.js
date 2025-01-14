@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const knex = require('knex');
 
+
 //Iniciamos la aplicación (Backend)
 const app = express();
 app.use(cors());
@@ -12,11 +13,18 @@ app.use(express.json());
 const db = knex ({
     client: 'sqlite3',
     connection: {
-        filename: 'videogames.db'
+        filename: 'videogames.db'                    
     },
     useNullAsDefault: true
 });
 
+const dbUser = knex ({
+    client: 'sqlite3',
+    connection: {
+        filename: 'users.db'                    
+    },
+    useNullAsDefault: true
+});
 
 //CRUD
 //Mostrar todos los videojuegos disponibles
@@ -60,6 +68,31 @@ app.delete('/videogames/:videogameId', async(req, res) => {
 
     res.status(204).json({});
 });
+
+
+
+
+app.get('/users', async(req, res) => {
+    const users = await dbUser('users').select('*');
+    res.status(200).json(users);
+});
+
+
+//TODO Mostrar usuario por ID En URL
+
+
+
+//Añadir un nuevo usuario
+app.post('/users', async (req, res) => {
+    await dbUser('users').insert({
+        name: req.body.name,    
+        password: req.body.password
+    });
+
+    res.status(201).json({}); // ---> Aquí damos el OK al registrar el nuevo juego. No devuelve nada
+});
+
+
 
 
 app.listen(8080, () => {

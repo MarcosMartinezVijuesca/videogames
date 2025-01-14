@@ -3,7 +3,6 @@ import { element, icon, td } from './documentUtil.js';
 import { notifySuccess } from './warningUtil.js';
 
 
-
 window.readVideogames = function() {
     axios.get('http://localhost:8080/videogames')
         .then((response) => {
