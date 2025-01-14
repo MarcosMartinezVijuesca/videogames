@@ -1,7 +1,11 @@
 {
     "name": "videogames-frontend",
     "version": "0.1",
-    "source": "src/index.html",
+    "source": [
+            "src/index.html",
+            "src/register-videogame.html",
+            "src/modify.html",
+            "src/add-user.html" ],
     "type": "module",
     "scripts": {
         "start": "parcel --no-cache",
