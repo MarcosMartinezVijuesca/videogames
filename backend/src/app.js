@@ -51,16 +51,17 @@ app.post('/videogames', async (req, res) => {
 });
 
  //modificar un videojuego existente por ID
-app.put('/videogames/:videogameId', async(req, res) => {
-   await db('videogames').where({ id: req.params.videogameId }).update({
-    name: req.body.name,
-    type: req.body.type,
-    year: req.body.year
+ app.put('/videogames/:videogameId', async (req, res) => {
+    await db('videogames').update({
+        name: req.body.name,
+        type: req.body.type,
+        year: req.body.year
+    }).where({id: req.params.videogameId});
 
-   });
-
-   res.status(204).json({});
+    res.status(204).json({});
 });
+
+
 
 //borrar videojuego que existe
 app.delete('/videogames/:videogameId', async(req, res) => {
@@ -71,7 +72,11 @@ app.delete('/videogames/:videogameId', async(req, res) => {
 
 
 
+//-----------------------------------------------------------------------------//
 
+
+
+//Mostrar todos los usuarios disponibles
 app.get('/users', async(req, res) => {
     const users = await dbUser('users').select('*');
     res.status(200).json(users);
@@ -79,8 +84,10 @@ app.get('/users', async(req, res) => {
 
 
 //TODO Mostrar usuario por ID En URL
-
-
+app.get('/users/:userId', async(req, res) => {
+    const user = await dbUser('users').select('*').where({ id: req.params.userId }).first();
+    res.status(200).json(user); // ---> Se da el OK de la conexión a la BBDD
+});
 
 //Añadir un nuevo usuario
 app.post('/users', async (req, res) => {
@@ -92,7 +99,21 @@ app.post('/users', async (req, res) => {
     res.status(201).json({}); // ---> Aquí damos el OK al registrar el nuevo juego. No devuelve nada
 });
 
+//Modificar un user existente por ID
+app.put('/users/:userId', async (req, res) => {
+    await dbUser('users').update({
+        name: req.body.name,
+        password: req.body.password
+    }).where({id: req.params.userId});
 
+    res.status(204).json({});
+});
+
+app.delete('/users/:userId', async(req,res) =>{
+    await dbUser('users').del().where({ id: req.params.userId });
+
+    res.status(204).json({});
+});
 
 
 app.listen(8080, () => {
