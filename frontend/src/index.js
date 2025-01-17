@@ -15,7 +15,7 @@ window.readVideogames = function() {
                 row.innerHTML = td(videogame.name) + 
                                 td(videogame.type) + 
                                 td (videogame.year) + 
-                                '<a class="btn btn-info" href="modify.html">' +
+                                '<a class="btn btn-info" href="modify.html?id='+ videogame.id+'">' +
                                 icon('edit') +
                                 '</a> ' +  '<a class="btn btn-danger" href="javascript:removeVideogame('+ videogame.id + ')">' + 
                                 icon('delete') +
