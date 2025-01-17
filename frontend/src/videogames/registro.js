@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {notifyError, notifySuccess} from'./warningUtil.js';
-import { element } from './documentUtil.js';
+import {notifyError, notifySuccess} from'../util/warningUtil.js';
+import { element } from '../util/documentUtil.js';
 
 
 window.addVideogame = function() {
@@ -38,23 +38,3 @@ window.addVideogame = function() {
 
 };
 
-window.addUser = function() {
-    const name = element('name').value;
-    const password = element('password').value;
-
-    if (name == '') {
-        notifyError('El nombre es un campo obligatorio.');
-        return;
-    }
-
-    axios.post('http://localhost:8080/users',{
-        name: name,
-        password: password
-   });
-
-
-   notifySuccess('Usuario registrado correctamente.');
-
-   element('name').value = '';
-   element('password').value = '';
-};
