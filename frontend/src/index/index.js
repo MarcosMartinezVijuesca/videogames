@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { element, icon, td } from './documentUtil.js';
-import { notifySuccess } from './warningUtil.js';
+import { element, icon, td } from '../util/documentUtil.js';
+import { notifySuccess } from '../util/warningUtil.js';
 
 
 window.readVideogames = function() {
@@ -15,7 +15,7 @@ window.readVideogames = function() {
                 row.innerHTML = td(videogame.name) + 
                                 td(videogame.type) + 
                                 td (videogame.year) + 
-                                '<a class="btn btn-info" href="modify.html?id='+ videogame.id+'">' +
+                                '<a class="btn btn-info" href="/videogames/modify.html?id='+ videogame.id+'">' +
                                 icon('edit') +
                                 '</a> ' +  '<a class="btn btn-danger" href="javascript:removeVideogame('+ videogame.id + ')">' + 
                                 icon('delete') +

@@ -2,10 +2,11 @@
     "name": "videogames-frontend",
     "version": "0.1",
     "source": [
-            "src/index.html",
-            "src/register-videogame.html",
-            "src/modify.html",
-            "src/add-user.html" 
+            "src/index/index.html",
+            "src/videogames/register-videogame.html",
+            "src/videogames/modify.html",
+            "src/users/add-user.html", 
+            "src/users/modify-user.html"
             ],
     "type": "module",
     "scripts": {

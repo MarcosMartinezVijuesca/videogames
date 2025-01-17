@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { element } from './documentUtil.js';
-import { notifySuccess, notifyError } from './warningUtil.js';
+import { element } from '../util/documentUtil.js';
+import { notifySuccess, notifyError } from '../util/warningUtil.js';
 
 
 
@@ -46,11 +46,8 @@ axios.put('http://localhost:8080/videogames/' + id, {
     console.log('Respuesta del servidor:', response);  // Verifica la respuesta
 if (response.status === 204) {
     notifySuccess('Videojuego modificado satisfactoriamente.');
-    
     }
 })
-
-notifySuccess('Videogame modificado correctamente');
 
 };
 
