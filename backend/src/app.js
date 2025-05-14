@@ -33,6 +33,21 @@ app.get('/videogames', async(req, res) => {
     res.status(200).json(videogames);
 });
 
+//Mostrar videojuego determinado por nombre
+app.get('/videogames/:videogame', async (req, res) => {
+    const result = await db('videogames').select('*').where({name: req.params.videogame}).first();
+    
+    if (result === undefined){
+        res.status(404).json({
+            status: 'not-found',
+            message: 'Videogame not found'
+        });
+        return;
+    }
+
+    res.status(200).json(result);
+});
+
 //Mostrar videojuego por id en la URL
 app.get('/videogames/:videogameId', async(req, res) => {
     const videogame = await db('videogames').select('*').where({ id: req.params.videogameId }).first();
@@ -41,14 +56,44 @@ app.get('/videogames/:videogameId', async(req, res) => {
 
 //Añadir un nuevo videojuego
 app.post('/videogames', async (req, res) => {
+
+    if (req.body.name === undefined || req.body.name === '') {
+        res.status(400).json({
+            status: 'bad-request',
+            message: 'Name of videogame is obligatory'
+        });
+        return;
+    }
+
+    if (req.body.type === undefined || req.body.type === '') {
+        res.status(400).json({
+            status: 'bad-request',
+            message: 'Type is necessary'
+        });
+        return;
+    }
+
+     if (req.body.year <= 0) {
+        res.status(400).json({
+            status: 'bad-request',
+            message: 'Year is necessary'
+        });
+        return;
+    }
+
+
     await db('videogames').insert({
         name: req.body.name,
         type:  req.body.type, // ---> todo esto mete los datos en la BBDD
         year:  req.body.year
     });
 
-    res.status(201).json({}); // ---> Aquí damos el OK al registrar el nuevo juego. No devuelve nada
+    const newVideogame = await db('videogames').where({ id }).first();
+
+    res.status(201).json(newVideogame);  // ---> Aquí damos el OK al registrar el nuevo juego. No devuelve nada
 });
+
+
 
  //modificar un videojuego existente por ID
  app.put('/videogames/:videogameId', async (req, res) => {
@@ -57,8 +102,12 @@ app.post('/videogames', async (req, res) => {
         type: req.body.type,
         year: req.body.year
     }).where({id: req.params.videogameId});
-
-    res.status(204).json({});
+    if (updated) {
+        const updatedGame = await db('videogames').where({ id }).first();
+        res.status(200).json(updatedGame);
+    } else {
+        res.status(404).json({ error: 'Videogame not found' });
+    }
 });
 
 
@@ -66,8 +115,11 @@ app.post('/videogames', async (req, res) => {
 //borrar videojuego que existe
 app.delete('/videogames/:videogameId', async(req, res) => {
     await db('videogames').del().where({ id: req.params.videogameId });
-
-    res.status(204).json({});
+    if (deleted) {
+            res.status(200).json({ message: 'Videogame deleted' });
+        } else {
+            res.status(404).json({ error: 'Videogame not found' });
+        }
 });
 
 
@@ -119,3 +171,5 @@ app.delete('/users/:userId', async(req,res) =>{
 app.listen(8080, () => {
     console.log("El backend ha iniciado correctamente en el puerto 8080");
 });
+
+module.exports = { app };
