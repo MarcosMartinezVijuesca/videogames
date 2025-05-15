@@ -82,7 +82,7 @@ app.post('/videogames', async (req, res) => {
     }
 
 
-    await db('videogames').insert({
+   const id = await db('videogames').insert({
         name: req.body.name,
         type:  req.body.type, // ---> todo esto mete los datos en la BBDD
         year:  req.body.year
@@ -97,7 +97,7 @@ app.post('/videogames', async (req, res) => {
 
  //modificar un videojuego existente por ID
  app.put('/videogames/:videogameId', async (req, res) => {
-    await db('videogames').update({
+    const updated = await db('videogames').update({
         name: req.body.name,
         type: req.body.type,
         year: req.body.year
@@ -114,7 +114,7 @@ app.post('/videogames', async (req, res) => {
 
 //borrar videojuego que existe
 app.delete('/videogames/:videogameId', async(req, res) => {
-    await db('videogames').del().where({ id: req.params.videogameId });
+    const deleted = await db('videogames').del().where({ id: req.params.videogameId });
     if (deleted) {
             res.status(200).json({ message: 'Videogame deleted' });
         } else {
