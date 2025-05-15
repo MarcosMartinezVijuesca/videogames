@@ -26,7 +26,7 @@ describe('POST /videogames', () => {
         chai.request(app)
             .post('/videogames')
             .send({ 
-                name: 'Test Game',
+                name: 'Testeo Game',
                 type: 'Action', 
                 year: 2024
                 })
@@ -92,10 +92,11 @@ describe('PUT /videogames/:id', () => {
 describe('DELETE /videogames/:id', () => {
     it('should delete a videogame (success)', (done) => {
         chai.request(app)
-            .delete('/videogames/33')
+            .delete('/videogames/48')
             .end((err, res) => {
                 expect(res).to.have.status(200); // Espera éxito
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('videogame deleted'); // El cuerpo debe tener un mensaje de éxito
+                expect(res.body).to.have.property('id'); // El cuerpo debe tener el ID del videojuego eliminado
                 done();
             });
     });
@@ -104,7 +105,7 @@ describe('DELETE /videogames/:id', () => {
         chai.request(app)
             .delete('/videogames/9999') // ID que no existe
             .end((err, res) => {
-                expect(res).to.have.status(400); // Espera error 404
+                expect(res).to.have.status(404); // Espera error 404
                 expect(res.body.status).to.equal('bad-request');
                 expect(res.body).to.have.property('Videogame not found'); // El cuerpo debe tener un mensaje de error
                 done();
