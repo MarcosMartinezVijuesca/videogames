@@ -1,4 +1,4 @@
-const { findVideogames, findVideogameByName, findVideogameById, registerVideogame, modifyVideogame, removeVideogame } = require("../service/videogames");
+const { findVideogames, findVideogameByName, registerVideogame, findVideogameById, modifyVideogame, removeVideogame } = require("../service/videogames");
 
 const getVideogames = async (req, res) => {
    const videogames = await findVideogames();
@@ -36,7 +36,7 @@ const getVideogameByName = async (req, res) => {
         return;
     }
 
-     if (req.body.year <= 0) {
+     if (req.body.year <= 0 || req.body.year === '') {
         res.status(400).json({
             status: 'bad-request',
             message: 'Year is necessary'
@@ -62,6 +62,7 @@ const putVideogame = async (req, res) => {
         res.status(404).json({ error: 'Videogame not found' });
     }
 };
+
 const deleteVideogame = async (req, res) => {
     const deleted = await removeVideogame(req.params.videogameId);
    if (deleted) {
