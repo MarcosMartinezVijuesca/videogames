@@ -22,9 +22,10 @@ const findVideogameByName = (async (name) => {
 });
 
 const findVideogameById = (async (id) => {
-   const videogame = await db('videogames').select('*').where({ id }).first();
-   return videogame;
-});
+    const result = await db('videogames').select('*').where({ id }).first();
+
+    return result;
+}); 
 
 const registerVideogame = (async (name, type, year) => { 
    const [id] = await db('videogames').insert({ name, type, year });

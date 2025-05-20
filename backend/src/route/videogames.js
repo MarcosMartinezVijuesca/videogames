@@ -1,5 +1,5 @@
 const express = require('express');
-const { getVideogames, getVideogameByName, getVideogameById, postVideogame, putVideogame, deleteVideogame } = require('../controller/videogames');
+const { getVideogames, getVideogameByName, postVideogame, putVideogame, deleteVideogame } = require('../controller/videogames');
 const router = express.Router();
 
 router.get('/videogames', getVideogames);

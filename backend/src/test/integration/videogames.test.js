@@ -26,9 +26,9 @@ describe('POST /videogames', () => {
         chai.request(app)
             .post('/videogames')
             .send({ 
-                name: 'Testeo Game',
-                type: 'Action', 
-                year: 2024
+                name: 'GTA6',
+                type: 'Action',
+                year: 2013
                 })
             .end((err, res) => {
                 expect(res).to.have.status(201); // Espera que la respuesta sea 201 (creado)
@@ -39,29 +39,64 @@ describe('POST /videogames', () => {
             });
     });
 
-    it('should fail to create a videogame with missing fields', (done) => {
+    it('should fail to create a videogame with missing name', (done) => {
         chai.request(app)
             .post('/videogames')
             .send({ 
                 name: '', 
-                type: 'Action' 
-            }) // Falta el campo year y el nombre está vacío
+                type: 'Action',
+                year: 2024 
+            }) // Falta el campo nombre
             .end((err, res) => {
                 expect(res).to.have.status(400); // Espera error 400 (petición incorrecta)
                 expect(res.body.status).to.equal('bad-request');
-                expect(res.body).to.have.property('Name and year must be filled'); // El cuerpo debe tener un mensaje de error
+                expect(res.body.message).to.equal('Name of videogame is obligatory'); // El cuerpo debe tener un mensaje de error
                 done();
             });
     });
 });
 
+ it('should fail to create a videogame with missing type', (done) => {
+        chai.request(app)
+            .post('/videogames')
+            .send({ 
+                name: 'GTA V', 
+                type: '',
+                year: '2013' 
+            }) // Falta el campo tipo
+            .end((err, res) => {
+                expect(res).to.have.status(400); // Espera error 400 (petición incorrecta)
+                expect(res.body.status).to.equal('bad-request');
+                expect(res.body.message).to.equal('Type is necessary'); // El cuerpo debe tener un mensaje de error
+                done();
+            });
+    });
+
+ it('should fail to create a videogame with missing year', (done) => {
+        chai.request(app)
+            .post('/videogames')
+            .send({ 
+                name: 'GTA V', 
+                type: 'Action',
+                year: '' 
+            }) // Falta el campo year
+            .end((err, res) => {
+                expect(res).to.have.status(400); // Espera error 400 (petición incorrecta)
+                expect(res.body.status).to.equal('bad-request');
+                expect(res.body.message).to.equal('Year is necessary'); // El cuerpo debe tener un mensaje de error
+                done();
+            });
+    });
+
+
+
 describe('PUT /videogames/:id', () => {
     it('should update a videogame (success)', (done) => {
         chai.request(app)
-            .put('/videogames/34')
+            .put('/videogames/57') // ID del videojuego a actualizar
             .send({ 
                 name: 'Updated Game', 
-                type: 'RPG', 
+                type: 'AUTO', 
                 year: 2023 
             })
             .end((err, res) => {
@@ -81,9 +116,8 @@ describe('PUT /videogames/:id', () => {
                 type: 'RPG', 
                 year: 2023 })
             .end((err, res) => {
-                expect(res).to.have.status(400); // Espera error 404 (no encontrado)
-                expect(res.body.status).to.equal('bad-request');
-                expect(res.body).to.have.property('Videogame not found'); // El cuerpo debe tener un mensaje de error
+                expect(res).to.have.status(404); // Espera error 404 (no encontrado)
+                expect(res.body.error).to.equal('Videogame not found'); // El cuerpo debe tener un mensaje de error
                 done();
             });
     });
@@ -92,11 +126,10 @@ describe('PUT /videogames/:id', () => {
 describe('DELETE /videogames/:id', () => {
     it('should delete a videogame (success)', (done) => {
         chai.request(app)
-            .delete('/videogames/48')
+            .delete('/videogames/53')
             .end((err, res) => {
                 expect(res).to.have.status(200); // Espera éxito
-                expect(res.body).to.have.property('videogame deleted'); // El cuerpo debe tener un mensaje de éxito
-                expect(res.body).to.have.property('id'); // El cuerpo debe tener el ID del videojuego eliminado
+                expect(res.body).to.have.property('message'); // El cuerpo debe tener un mensaje de éxito
                 done();
             });
     });
@@ -106,8 +139,7 @@ describe('DELETE /videogames/:id', () => {
             .delete('/videogames/9999') // ID que no existe
             .end((err, res) => {
                 expect(res).to.have.status(404); // Espera error 404
-                expect(res.body.status).to.equal('bad-request');
-                expect(res.body).to.have.property('Videogame not found'); // El cuerpo debe tener un mensaje de error
+                expect(res.body.error).to.equal('Videogame not found'); // El cuerpo debe tener un mensaje de error
                 done();
             });
     });
