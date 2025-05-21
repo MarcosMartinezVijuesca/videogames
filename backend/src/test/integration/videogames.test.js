@@ -93,7 +93,7 @@ describe('POST /videogames', () => {
 describe('PUT /videogames/:id', () => {
     it('should update a videogame (success)', (done) => {
         chai.request(app)
-            .put('/videogames/57') // ID del videojuego a actualizar
+            .put('/videogames/7') // ID del videojuego a actualizar
             .send({ 
                 name: 'Updated Game', 
                 type: 'AUTO', 
@@ -126,7 +126,7 @@ describe('PUT /videogames/:id', () => {
 describe('DELETE /videogames/:id', () => {
     it('should delete a videogame (success)', (done) => {
         chai.request(app)
-            .delete('/videogames/53')
+            .delete('/videogames/13')
             .end((err, res) => {
                 expect(res).to.have.status(200); // Espera éxito
                 expect(res.body).to.have.property('message'); // El cuerpo debe tener un mensaje de éxito

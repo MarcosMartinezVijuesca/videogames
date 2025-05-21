@@ -1,9 +1,13 @@
 const knex = require('knex');
 
 const db = knex ({
-    client: 'sqlite3',
+    client: 'mysql2',
     connection: {
-        filename: 'videogames.db'                    
+        host: 'localhost',
+        port: 3306,
+        user: 'user',
+        password: 'password',
+        database: 'videogames'                 
     },
     useNullAsDefault: true
 });
