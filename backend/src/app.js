@@ -4,6 +4,7 @@ const cors = require('cors');
 const knex = require('knex');
 
 const videogames = require('./route/videogames');
+const { config } = require('./config/configuration');
 
 
 //Iniciamos la aplicación (Backend)
@@ -144,8 +145,8 @@ app.delete('/users/:userId', async(req,res) =>{
 });
 
 
-app.listen(8080, () => {
-    console.log("El backend ha iniciado correctamente en el puerto 8080");
+app.listen(config.service.port, () => {
+    console.log('El backend ha iniciado correctamente en el puerto ' + config.service.port);
 });
 
 module.exports = { app };
