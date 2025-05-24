@@ -1,13 +1,16 @@
 const knex = require('knex');
+const { config } = require('../config/configuration');
+
+
 
 const db = knex ({
     client: 'mysql2',
     connection: {
-        host: 'localhost',
-        port: 3306,
-        user: 'user',
-        password: 'password',
-        database: 'videogames'                 
+        host: config.db.host,
+        port: config.db.port,
+        user: config.db.user,
+        password: config.db.password,
+        database: config.db.database         
     },
     useNullAsDefault: true
 });
