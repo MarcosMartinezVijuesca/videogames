@@ -4,6 +4,9 @@ start-dev-env:
 stop-dev-env:
 	docker compose -f docker-compose.yaml down
 
+delete-dev-env:
+	docker compose -f docker-compose.yaml down --volumes 
+
 all-test: stop-dev-env start-dev-env
 	sleep 6
 	powershell -Command "cd backend; npm test" || true
