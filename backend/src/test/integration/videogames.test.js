@@ -26,7 +26,7 @@ describe('POST /videogames', () => {
         chai.request(app)
             .post('/videogames')
             .send({ 
-                name: 'GTA6',
+                name: 'GTA VI',
                 type: 'Action',
                 year: 2013
                 })
@@ -126,7 +126,7 @@ describe('PUT /videogames/:id', () => {
 describe('DELETE /videogames/:id', () => {
     it('should delete a videogame (success)', (done) => {
         chai.request(app)
-            .delete('/videogames/13')
+            .delete('/videogames/1')
             .end((err, res) => {
                 expect(res).to.have.status(200); // Espera éxito
                 expect(res.body).to.have.property('message'); // El cuerpo debe tener un mensaje de éxito
