@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [18.x, 20.x, 22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         #Some versions of Node.js may not be available in the actions/setup-node@v4 action.
         # If you need to use a specific version of Node.js, you can specify it like this: 
@@ -31,6 +31,6 @@ jobs:
     - run: npm install
       working-directory: ./backend
     - run: docker compose -f docker-compose.yaml up -d
-    - run: sleep 5s
+    - run: sleep 6s
     - run: npm test
       working-directory: ./backend
