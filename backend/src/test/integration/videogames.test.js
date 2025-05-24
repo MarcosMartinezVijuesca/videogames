@@ -7,7 +7,7 @@ const app = require('../../app').app;
 chai.use(chaiHttp);
 chai.should();
 
-
+//test de integración para la API de videojuegos
 describe('GET /videogames', () => {
     it('should return all videogames', (done) => { 
         chai.request(app)
